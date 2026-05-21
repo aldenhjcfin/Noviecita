@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6 Meses de Pura Felicidad ❤️🌻</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap');
+    </style>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #1a1a1a;
+            color: white;
+            font-family: 'Poppins', sans-serif; /* Mantiene esta para botoncitos y la interfaz */
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden; 
+            text-align: center;
+            z-index: 10;
+        }
+
+        #main-content {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            width: 95vw; max-width: 900px; 
+            height: 90vh;
+            position: relative;
+        }
+
+        .pantalla {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            z-index: 11;
+        }
+
+        .oculto {
+            opacity: 0 !important;
+            transform: scale(0.9);
+            pointer-events: none !important;
+        }
+
+        /* --- CAPA 1: EL CORAZÓN DE ENTRADA --- */
+        #entrada-text {
+            font-size: 2rem;
+            color: #ff4d4d;
+            margin-bottom: 30px;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+        }
+        #entry-heart {
+            font-size: 8rem;
+            cursor: pointer;
+            animation: heartPulse 1.5s infinite;
+            transition: transform 1s ease-in-out, opacity 0.5s ease;
+        }
+
+        /* --- CAPA 2: FOTO + TEXTO LATERAL + GIRASOL --- */
+        #screen-experiencia {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease-out 1s; 
+            width: 100%;
+        }
+        
+        #setup-wrapper {
+            display: flex;
+            flex-direction: row; 
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            transition: opacity 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            #setup-wrapper {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .columna-centro {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .columna-derecha {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px; 
+        }
+
+        .mi-foto-wrapper {
+            position: relative;
+            width: 60vmin; max-width: 280px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
+            border: 3px solid #ff4d4d;
+        }
+        .mi-foto { width: 100%; height: auto; display: block; }
+        
+        /* MINI REPRODUCTOR ANIMADO */
+        #mini-player {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 77, 77, 0.5);
+            box-shadow: 0 0 10px rgba(220, 20, 60, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        #mini-player:hover {
+            transform: scale(1.05);
+            border-color: #ff4d4d;
+        }
+
+        /* Estilos cuando la música ESTÁ sonando (brillito y ecualizador) */
+        #mini-player.reproduciendo {
+            animation: resplandorMagico 2s infinite;
+            border-color: #ffeb3b;
+        }
+
+        @keyframes resplandorMagico {
+            0% { box-shadow: 0 0 10px rgba(255, 77, 77, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(255, 77, 77, 0.8), 0 0 10px rgba(255, 235, 59, 0.6); }
+            100% { box-shadow: 0 0 10px rgba(255, 77, 77, 0.4); }
+        }
+
+        #player-icon { font-size: 1.2rem; }
+        #player-text { font-size: 0.9rem; color: #ffeb3b; font-weight: 500;}
+
+        /* Las barritas de Instagram (Ecualizador) */
+        .ecualizador {
+            display: none; 
+            align-items: flex-end;
+            gap: 3px;
+            height: 15px;
+            margin-left: 5px;
+        }
+
+        #mini-player.reproduciendo .ecualizador {
+            display: flex; 
+        }
+
+        .barra {
+            width: 3px;
+            background-color: #ff4d4d;
+            border-radius: 2px;
+            animation: saltar 0.5s infinite alternate;
+        }
+
+        .barra:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+        .barra:nth-child(2) { height: 15px; animation-delay: 0.3s; }
+        .barra:nth-child(3) { height: 5px; animation-delay: 0.0s; }
+        .barra:nth-child(4) { height: 12px; animation-delay: 0.2s; }
+
+        @keyframes saltar {
+            0% { height: 3px; }
+            100% { height: 15px; }
+        }
+
+        /* EL TEXTO LATERAL */
+        .texto-lateral {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(220, 20, 60, 0.3);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            width: 80vw;
+            max-width: 300px;
+            max-height: 200px; 
+            overflow-y: auto; 
+            text-align: left;
+        }
+
+        .texto-lateral p {
+            font-family: 'Times New Roman', Times, serif; /* NUEVA TIPOGRAFÍA ELEGANTE */
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0 0 10px 0;
+        }
+
+        .texto-lateral::-webkit-scrollbar { width: 6px; }
+        .texto-lateral::-webkit-scrollbar-track { background: rgba(255, 77, 77, 0.1); border-radius: 3px; }
+        .texto-lateral::-webkit-scrollbar-thumb { background: #ff4d4d; border-radius: 3px; cursor: pointer; }
+
+        #interaction-text { font-size: 1.3rem; color: #ffeb3b; margin: 15px 0 10px 0; }
+        #girasol-btn {
+            font-size: 5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: sunflowerPulse 2s infinite;
+        }
+        #girasol-btn:active { transform: scale(0.9); animation: none; }
+
+        /* --- CAPA 3: LA CARTA QUE SE DESPLIEGA --- */
+        #envelope-content {
+            display: flex; flex-direction: column; align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px; border-radius: 20px;
+            box-shadow: 0 0 25px rgba(220, 20, 60, 0.4);
+            backdrop-filter: blur(5px);
+            overflow: hidden; 
+            max-height: 0; 
+            transition: max-height 1s ease-out; 
+            width: 100%; max-width: 500px;
+        }
+        
+        #envelope-content.desplegado { max-height: 80vh; }
+
+        .carta-text-container {
+            max-height: 50vmin;
+            overflow-y: auto; 
+            padding-right: 15px; 
+        }
+        
+        .carta-text-container::-webkit-scrollbar { width: 6px; }
+        .carta-text-container::-webkit-scrollbar-track { background: rgba(255, 77, 77, 0.1); border-radius: 3px; }
+        .carta-text-container::-webkit-scrollbar-thumb { background: #ff4d4d; border-radius: 3px; cursor: pointer; }
+
+        h1 {
+            font-size: 2.8rem; margin-bottom: 15px;
+            color: #ff4d4d; font-family: 'Dancing Script', cursive;
+            text-shadow: 2px 2px 10px rgba(255, 77, 77, 0.5);
+        }
+        
+        /* PÁRRAFOS DE LA CARTA PRINCIPAL */
+        p { 
+            font-family: 'Times New Roman', Times, serif; /* NUEVA TIPOGRAFÍA ELEGANTE */
+            font-size: 1.25rem; 
+            line-height: 1.8; 
+            color: #e6e6e6; 
+            text-align: left; 
+        }
+        
+        .signature { font-family: 'Dancing Script', cursive; font-size: 2rem; color: #ff4d4d; margin-top: 20px; }
+
+        .floating-hearts { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; }
+        .bg-heart { position: absolute; bottom: -10%; color: rgba(255, 77, 77, 0.15); animation: float 7s linear infinite; }
+
+        @keyframes heartPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes growAndFade { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(15); opacity: 0.1; } 100% { transform: scale(15); opacity: 0; } }
+        @keyframes sunflowerPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes float { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <audio id="cancion-fondo" loop>
+        <source src="cancion.m4a" type="audio/mp4">
+    </audio>
+
+    <audio id="cancion-previa" loop>
+        <source src="cancion2.m4a" type="audio/mp4">
+    </audio>
+
+    <div class="floating-hearts" id="hearts-container"></div>
+
+    <div id="main-content">
+        <div id="screen-entrada" class="pantalla">
+            <div id="entrada-text">¡Felices 6 Meses mi Corazón!...</div>
+            <div id="entry-heart" onclick="clickEntryHeart()">❤️</div>
+        </div>
+
+        <div id="screen-experiencia" class="pantalla oculto">
+            
+            <div id="setup-wrapper">
+                
+                <div class="columna-centro">
+                    <div class="mi-foto-wrapper">
+                        <img src="foto.jpeg" alt="Nuestra Foto" class="mi-foto">
+                    </div>
+                    <div id="interaction-text">Toca las estrellas para abrir un poco de nuestro recorrido...✨</div>
+                    <div id="girasol-btn" onclick="clickGirasol()">✨</div>
+                </div>
+
+                <div class="columna-derecha">
+                    
+                    <div id="mini-player" onclick="togglePlayPrevia()">
+                        <span id="player-icon">💕</span>
+                        <span id="player-text">Reproducir</span>
+                        <div class="ecualizador">
+                            <div class="barra"></div>
+                            <div class="barra"></div>
+                            <div class="barra"></div>
+                            <div class="barra"></div>
+                        </div>
+                    </div>
+
+                    <div class="texto-lateral">
+                        <p style="color: #ff4d4d; font-family: 'Dancing Script', cursive; font-size: 1.5rem; text-align: center; margin-bottom: 10px;">Un pequeño detalle...</p>
+                        <p>Dale corazón a la canción de arriba mientras lees esto.</p>
+                        <p>Esto es un pequeño recordatorio aunque no estemos siempre juntos de lo maravillosa que eres, de lo que yo un poco puedo hacer, coloqué esta canción porque es un poco más personal hacia ti, ya que aunque este hecho tres, eres mi lugar seguro donde puedo ser yo mismo, aunque a veces te enojes, pero asi son las relaciones, es amor donde todo es bonito y un poco de conflicto sano, por eso en un verso dice ¨me haces sentir tranquilo en la obscuridad¨, y eso eres tú, una luz que siempre estas en mi mente dándome animos en momentos complicados, por eso quiero estar a tu lado mi corazón de melón .</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="envelope-content" class="hidden">
+                <div class="carta-text-container">
+                    <h1>¡Mi amor, felices 6 meses!</h1>
+                    <p>Gracias por cada momento que hemos compartido en este medio año, mi parte favorita de lo que compartimos como pareja es que sin duda tu y yo nos convertimos en nosotros. Gracias por las risas, por los abrazos que me curan todo, y por la compañía incondicional que me brindas mi niña eres unica como siempre lo he dicho, eres mi chica eclectica.</p>
+                    <p>Como te lo mecione antes que me esfuerzo en ser mejor para ti, talvez no lo notes pero todos los dias busco la manera de hacerte sentir bonita, segura y feliz, esa sera siempre mis intenciones, eres mi polvo de estrellas en medio del universo, la persona que ilumina mis días más oscuros y la que me hace soñar despierto con un futuro increíble. Y te seguire queriendo hasta donde tu me lo permitas mi cuchurrumin.</p>
+                    <p>Tú haces que todo valga la pena. ¡Por muchos meses y años más de esta hermosa historia!</p>
+                    <div class="signature">Te amo muchísimo,<br>Jonathan</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .growAndFade { animation: growAndFade 1.2s forwards !important; cursor: default !important; }
+        .hidden { display: none !important; opacity: 0; pointer-events: none; }
+    </style>
+    <script>
+        const screenEntrada = document.getElementById('screen-entrada');
+        const screenExperiencia = document.getElementById('screen-experiencia');
+        const setupWrapper = document.getElementById('setup-wrapper');
+        const envelopeContent = document.getElementById('envelope-content');
+        const entryHeart = document.getElementById('entry-heart');
+        const girasolBtn = document.getElementById('girasol-btn');
+        
+        // Audios
+        const cancionPrincipal = document.getElementById('cancion-fondo');
+        const cancionPrevia = document.getElementById('cancion-previa');
+        
+        // Elementos del mini reproductor
+        const miniPlayer = document.getElementById('mini-player');
+        const playerIcon = document.getElementById('player-icon');
+        const playerText = document.getElementById('player-text');
+        let isPlayingPrevia = false;
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 5 + 's';
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+            document.getElementById('hearts-container').appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }
+        setInterval(createHeart, 400);
+
+        function clickEntryHeart() {
+            entryHeart.classList.add('growAndFade');
+            entryHeart.removeAttribute('onclick'); 
+
+            setTimeout(() => {
+                screenEntrada.classList.add('oculto');
+                screenExperiencia.classList.remove('oculto');
+                screenExperiencia.style.opacity = '1';
+            }, 1200);
+        }
+
+        // Función interactiva para el mini reproductor con animaciones
+        function togglePlayPrevia() {
+            if (isPlayingPrevia) {
+                cancionPrevia.pause();
+                playerIcon.innerText = '💕';
+                playerText.innerText = 'Reproducir';
+                miniPlayer.classList.remove('reproduciendo');
+                isPlayingPrevia = false;
+            } else {
+                cancionPrevia.play();
+                playerIcon.innerText = '💞';
+                playerText.innerText = 'Sonando...';
+                miniPlayer.classList.add('reproduciendo');
+                isPlayingPrevia = true;
+            }
+        }
+
+        function clickGirasol() {
+            girasolBtn.style.animation = 'none'; 
+            girasolBtn.removeAttribute('onclick'); 
+
+            // Detener la canción secundaria si estaba sonando y apagar la animación
+            if (isPlayingPrevia) {
+                cancionPrevia.pause();
+                miniPlayer.classList.remove('reproduciendo');
+            }
+
+            // Iniciar la canción principal de la carta
+            cancionPrincipal.play().catch(e => console.log('Audio bloqueado temporalmente por navegador.'));
+
+            girasolBtn.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                girasolBtn.style.transform = 'scale(1)'; 
+
+                setupWrapper.classList.add('hidden');
+                envelopeContent.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    envelopeContent.classList.add('desplegado');
+                }, 50);
+
+            }, 200); 
+        }
+    </script>
+</body>
+</html>
